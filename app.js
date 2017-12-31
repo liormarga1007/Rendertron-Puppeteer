@@ -49,14 +49,16 @@ async function rendertronTakeScreenshot() {
         
             await page.emulate(devices[j]);
             console.log('device name: ' + devices[j].name + ' country: '+ countriesSuffix[i]);
-            
-            await page.goto(browseUrl);
-            
+                                   
             try {
+                await page.goto(browseUrl);
+
                 await page.waitForSelector(ENTER_A_URL_SELECTOR,{timeout:5000});
+                
             } catch (error) {
-                console.log(`load enter ${browseUrl} url more than 5 sec`)
+                console.log(`load enter ${browseUrl} url more than 5 sec`);
                 browser.close();
+                
                 continue;
             }
             
