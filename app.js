@@ -5,11 +5,11 @@ const browseUrl = 'http://render-tron.appspot.com/';
 const ENTER_A_URL_SELECTOR = 'input[type=url]'
 const TAKE_SCREENSHOT_SELECTOR = '#options > button:nth-child(1) > i'
 
-var countriesSuffix = [ //'es',
-                        //'co.il',
-                        //'com.ar',
-                        //'cl',
-                        //'pr',
+var countriesSuffix = [ 'es',
+                        'co.il',
+                        'com.ar',
+                        'cl',
+                        'pr',
                         'com.br',
                         'ca',
                         'mx',
@@ -21,7 +21,7 @@ async function rendertronTakeScreenshot() {
     for (let i=0 ; i < countriesSuffix.length; i++){
         for (let j=0; j < devices.length; j++){
             const browser = await puppeteer.launch({
-                headless: true,
+                headless: false,
                 gpu: false,
                 scrollbars: false,
                 args: ['--reduce-security-for-testing', '--deterministic-fetch','--disable-background-networking' ]
