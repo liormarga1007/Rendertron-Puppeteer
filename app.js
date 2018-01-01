@@ -23,7 +23,9 @@ var countriesSuffix = [
                         ];
 
 async function rendertronTakeScreenshot() {
+    //run over all the countries that support youtube
     for (let i=0 ; i < countriesSuffix.length; i++){
+        //run over all supported device in puppeteer
         for (let j=0; j < devices.length; j++){
             const browser = await puppeteer.launch({
                 headless: true,
@@ -39,30 +41,37 @@ async function rendertronTakeScreenshot() {
                                    
             try {
                 await page.goto(browseUrl);
-
-                await page.waitForSelector(ENTER_A_URL_SELECTOR,{timeout:5000});
-                
+                await page.waitForSelector(ENTER_A_URL_SELECTOR,{timeout:5000});                
             } catch (error) {
                 console.log(`load enter ${browseUrl} url more than 5 sec`);
                 browser.close();
-                
                 continue;
             }
             
-        
+            //get enterurl element
             enterUrlElement = await page.$(ENTER_A_URL_SELECTOR);
         
+            //enter url to scrape 
             const ENTER_A_URL = `https://www.youtube.${countriesSuffix[i]}/watch?v=kaH-nx6owmg`
             await enterUrlElement.type(ENTER_A_URL);
         
+            //click all the buttons in rendertron 
             for (let k=0; k< buttons.length; k++){
-                await page.waitFor(buttons[k])
-                renderElement = await page.$(buttons[k]);
-                await renderElement.click();
-        
                 try {
+                    //click on TAKE_SCREENSHOT_SELECTOR,RENDER_SERIALIZE_SELECTOR,RENDER_SERIALIZE_WITH_WEB_COMPONENTS_SELECTOR
+                    await page.waitFor(buttons[k])
+                    renderElement = await page.$(buttons[k]);
+                    await renderElement.click();
+                } catch (error) {
+                    console.log(`${buttons[k]} is not in the DOM`)
+                    continue;
+                }
+                        
+                try {
+                    //wait for img this mean scrape succeeded 
                     await page.waitForSelector('img',{timeout:8000});
                     let screenShot = await page.$('img')
+                    //go back for the next button
                     await page.goBack();                    
                 } catch (error) {
                     console.log('load more than 8 sec')
