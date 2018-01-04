@@ -2,10 +2,11 @@ const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 
 const browseUrl = 'http://render-tron.appspot.com/';
-const ENTER_A_URL_SELECTOR = 'input[type=url]'
-const TAKE_SCREENSHOT_SELECTOR = '#options > button:nth-child(1) > i'
-const RENDER_SERIALIZE_SELECTOR = '#options > button:nth-child(2) > i'
-const RENDER_SERIALIZE_WITH_WEB_COMPONENTS_SELECTOR = '#options > button:nth-child(3) > i'
+const ENTER_A_URL_SELECTOR = 'input[type=url]';
+const TAKE_SCREENSHOT_SELECTOR = '#options > button:nth-child(1) > i';
+const RENDER_SERIALIZE_SELECTOR = '#options > button:nth-child(2) > i';
+const RENDER_SERIALIZE_WITH_WEB_COMPONENTS_SELECTOR = '#options > button:nth-child(3) > i';
+const IMG_SELECTOR = 'img';
 
 const buttons=[ 
                 TAKE_SCREENSHOT_SELECTOR,
@@ -69,8 +70,8 @@ async function rendertronTakeScreenshot() {
                         
                 try {
                     //wait for img this mean scrape succeeded 
-                    await page.waitForSelector('img',{timeout:8000});
-                    let screenShot = await page.$('img')
+                    await page.waitForSelector(IMG_SELECTOR,{timeout:8000});
+                    let screenShot = await page.$(IMG_SELECTOR)
                     //go back for the next button
                     await page.goBack();                    
                 } catch (error) {
