@@ -37,7 +37,7 @@ async function rendertronTakeScreenshot() {
             const page = await browser.newPage();
         
             await page.emulate(devices[j]);
-            console.log('device name: ' + devices[j].name + ' country: '+ countriesSuffix[i]);
+            console.log(new Date() + ' device name: ' + devices[j].name + ' country: '+ countriesSuffix[i]);
                                    
             try {
                 await page.goto(browseUrl);
