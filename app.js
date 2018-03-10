@@ -25,7 +25,7 @@ var countriesSuffix = [
 
 async function rendertronTakeScreenshot() {
     //run over all the countries that support youtube
-    for (let i=0 ; i < countriesSuffix.length; i++){
+    for (let i=0 ; i < 8; i++){
         //run over all supported device in puppeteer
         let j=Math.floor((Math.random() * (devices.length-1)) + 1);
         const browser = await puppeteer.launch({
@@ -36,9 +36,11 @@ async function rendertronTakeScreenshot() {
         });
     
         const page = await browser.newPage();
-    
+
+        let l=Math.floor((Math.random() * (countriesSuffix.length-1)) + 1);
+        
         await page.emulate(devices[j]);
-        console.log(new Date() + ' device name: ' + devices[j].name + ' country: '+ countriesSuffix[i]);
+        console.log(new Date() + ' device name: ' + devices[j].name + ' country: '+ countriesSuffix[l]);
                                 
         try {
             await page.goto(browseUrl);
@@ -53,7 +55,7 @@ async function rendertronTakeScreenshot() {
         enterUrlElement = await page.$(ENTER_A_URL_SELECTOR);
     
         //enter url to scrape 
-        const ENTER_A_URL = `https://www.youtube.${countriesSuffix[i]}/watch?v=kaH-nx6owmg`
+        const ENTER_A_URL = `https://www.youtube.${countriesSuffix[l]}/watch?v=kaH-nx6owmg`
         await enterUrlElement.type(ENTER_A_URL);
     
         //click all the buttons in rendertron 
